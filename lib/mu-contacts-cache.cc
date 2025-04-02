@@ -213,7 +213,8 @@ ContactsCache::add(Contact&& contact)
 	} else {	// existing contact.
 		auto& existing{it->second};
 		++existing.frequency;
-		if (contact.message_date > existing.message_date) {	// update?
+		if (contact.message_date > existing.message_date &&
+		    contact.type == Contact::Type::From) {	// update?
 			existing.email	      = std::move(contact.email);
 			// update name only if new one is not empty.
 			if (!contact.name.empty())
